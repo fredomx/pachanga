@@ -986,26 +986,75 @@ function escapeHtml(s) {
     return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+let currentGuests = [];
+const ADMIN_PASS  = 'mifiestaloca';
+
+function isAdmin() { return sessionStorage.getItem('admin') === '1'; }
+
 function renderGuests(guests) {
+    currentGuests = guests;
     const container = document.getElementById('guests-container');
     if (!guests.length) {
         container.innerHTML = '<p style="color:rgba(255,255,255,.35);font-size:.9rem;text-align:center;padding:14px">¡Sé el primero en confirmar! 👆</p>';
         return;
     }
+    const admin = isAdmin();
     container.innerHTML =
         '<div class="guest-count-badge">' + guests.length + (guests.length === 1 ? ' persona va' : ' personas van') + '</div>'
         + guests.map(function(g, i) {
             const color = avatarColors[i % avatarColors.length];
-            return '<div class="guest-item">'
+            return '<div class="guest-item" style="position:relative">'
                 + '<div class="guest-avatar" style="background:' + color + ';color:' + (color === '#ffff00' ? '#000' : '#fff') + '">'
                 + g.name.charAt(0).toUpperCase()
                 + '</div>'
-                + '<div>'
+                + '<div style="flex:1">'
                 + '<div class="guest-name">' + escapeHtml(g.name) + '</div>'
                 + (g.comment ? '<div class="guest-comment">' + escapeHtml(g.comment) + '</div>' : '')
-                + '</div></div>';
+                + '</div>'
+                + (admin ? '<div style="display:flex;gap:6px;flex-shrink:0">'
+                    + (g.comment ? '<button onclick="clearComment(' + i + ')" title="Borrar comentario" style="background:rgba(255,165,0,.2);border:1px solid rgba(255,165,0,.4);color:#ffa500;border-radius:6px;padding:3px 8px;cursor:pointer;font-size:.75rem">✏️</button>' : '')
+                    + '<button onclick="removeGuest(' + i + ')" title="Eliminar" style="background:rgba(255,0,0,.15);border:1px solid rgba(255,0,0,.3);color:#ff5555;border-radius:6px;padding:3px 8px;cursor:pointer;font-size:.75rem">✕</button>'
+                    + '</div>' : '')
+                + '</div>';
         }).join('');
 }
+
+async function saveGuests(guests) {
+    await fetch(KV_URL, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(guests)
+    });
+    renderGuests(guests);
+}
+
+async function clearComment(i) {
+    const guests = [...currentGuests];
+    guests[i] = { name: guests[i].name, comment: '' };
+    await saveGuests(guests);
+}
+
+async function removeGuest(i) {
+    if (!confirm('¿Eliminar a ' + currentGuests[i].name + '?')) return;
+    const guests = currentGuests.filter(function(_, idx) { return idx !== i; });
+    await saveGuests(guests);
+}
+
+// Activate admin by clicking the hit counter 3 times
+let hitClicks = 0;
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('hit-counter').addEventListener('click', function() {
+        hitClicks++;
+        if (hitClicks >= 3) {
+            hitClicks = 0;
+            const pass = prompt('🔐');
+            if (pass === ADMIN_PASS) {
+                sessionStorage.setItem('admin', '1');
+                renderGuests(currentGuests);
+            }
+        }
+    });
+});
 
 async function loadGuests() {
     try {
