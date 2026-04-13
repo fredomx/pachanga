@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ PARTY EN EL PARQUE ✨ ABRIL 15 ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink:   #ff5500;
+            --cyan:   #00ffff;
+            --lime:   #39ff14;
+            --purple: #00aaff;
+            --yellow: #ffff00;
+            --dark:   #000d00;
+        }
+
+        /* ── Reset ─────────────────────────────────────── */
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+
+        /* ── Body / starfield ───────────────────────────── */
+        body {
+            background: radial-gradient(ellipse at 50% 0%, #001a00 0%, #000a00 55%);
+            min-height: 100vh;
+            color: #fff;
+            font-family: Verdana, Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Twinkling stars layer */
+        .stars {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            background: white;
+            animation: twinkle var(--d,3s) ease-in-out infinite var(--delay,0s);
+        }
+        @keyframes twinkle {
+            0%,100% { opacity:.8; transform:scale(1); }
+            50%      { opacity:.1; transform:scale(.4); }
+        }
+
+        /* Cursor sparkle canvas */
+        #sparkle-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ── Marquee ────────────────────────────────────── */
+        .marquee-wrap {
+            background: linear-gradient(90deg, var(--pink), var(--purple), var(--cyan), var(--purple), var(--pink));
+            background-size: 300% 100%;
+            animation: gradshift 4s linear infinite;
+            padding: 8px 0;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes gradshift { to { background-position: 300% 0; } }
+        .marquee-text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 18s linear infinite;
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: white;
+            text-shadow: 0 0 8px rgba(255,255,255,.8);
+        }
+        @keyframes marquee { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
+
+        /* ── Sections wrapper ───────────────────────────── */
+        .page { position: relative; z-index: 1; }
+
+        /* ── HERO ───────────────────────────────────────── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 24px 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Floating Y2K emoji stickers */
+        .y2k-sticker {
+            position: absolute;
+            font-size: clamp(3rem, 8vw, 5rem);
+            filter: drop-shadow(0 0 8px var(--pink));
+            animation: floaty var(--fd,4s) ease-in-out infinite var(--fdelay,0s);
+            user-select: none;
+            pointer-events: none;
+            z-index: 2;
+        }
+        @keyframes floaty {
+            0%,100% { transform: translateY(0) rotate(var(--fr,0deg)); }
+            50%      { transform: translateY(-14px) rotate(calc(var(--fr,0deg) + 8deg)); }
+        }
+
+        /* Main title */
+        .main-title {
+            font-family: Impact, 'Arial Black', sans-serif;
+            font-size: clamp(3rem, 14vw, 7rem);
+            text-transform: uppercase;
+            line-height: .95;
+            background: linear-gradient(180deg,
+                #fff 0%, #fff 20%,
+                #00ffff 40%,
+                #39ff14 60%,
+                #ff5500 80%,
+                #ffff00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(255,0,153,.7));
+            animation: titlepulse 3s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes titlepulse {
+            0%,100% { filter: drop-shadow(0 0 20px rgba(255,0,153,.7)); }
+            50%      { filter: drop-shadow(0 0 35px rgba(0,255,255,.9)); }
+        }
+
+        .title-sub {
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(1.2rem, 5vw, 2rem);
+            background: linear-gradient(90deg, var(--cyan), var(--lime), var(--cyan));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradshift 3s linear infinite;
+            letter-spacing: 6px;
+            margin: 6px 0 20px;
+            z-index: 2;
+            position: relative;
+        }
+
+        /* Photo frame */
+        .photo-frame {
+            position: relative;
+            z-index: 3;
+            margin: 20px auto;
+            width: min(260px, 70vw);
+        }
+        .photo-frame::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--pink), var(--cyan), var(--lime), var(--purple), var(--pink));
+            background-size: 300% 300%;
+            animation: holographic 3s linear infinite;
+            z-index: -1;
+            filter: blur(2px);
+        }
+        @keyframes holographic {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .photo-frame img {
+            width: 100%;
+            border-radius: 16px;
+            display: block;
+            border: 3px solid rgba(255,255,255,.3);
+        }
+        .photo-badge {
+            position: absolute;
+            top: -14px;
+            right: -14px;
+            background: var(--yellow);
+            color: #000;
+            font-family: Impact, sans-serif;
+            font-size: .75rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            padding: 6px 10px;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            line-height: 1.1;
+            transform: rotate(12deg);
+            box-shadow: 0 0 12px var(--yellow);
+            border: 2px solid #000;
+        }
+
+        /* Date chip */
+        .date-chip {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(255,255,255,.06);
+            backdrop-filter: blur(12px);
+            border: 1.5px solid rgba(0,255,255,.4);
+            border-radius: 50px;
+            padding: 12px 28px;
+            margin: 18px 0 10px;
+            box-shadow: 0 0 20px rgba(0,255,255,.2), inset 0 0 15px rgba(0,255,255,.05);
+            z-index: 2;
+            position: relative;
+        }
+        .date-label {
+            font-family: 'VT323', monospace;
+            font-size: 1rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            line-height: 1.3;
+        }
+        .date-number {
+            font-family: Impact, sans-serif;
+            font-size: 4rem;
+            line-height: 1;
+            background: linear-gradient(180deg, #fff 30%, var(--cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .location-tag {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1rem;
+            color: var(--purple);
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px var(--purple);
+            margin-bottom: 10px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            margin-top: 16px;
+            font-family: Impact, sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            padding: 14px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #000;
+            background: linear-gradient(135deg, var(--cyan), var(--lime));
+            box-shadow: 0 0 25px var(--cyan), 0 4px 0 rgba(0,0,0,.5);
+            transition: transform .15s, box-shadow .15s;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-cta:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 0 40px var(--cyan), 0 7px 0 rgba(0,0,0,.5);
+        }
+
+        /* ── Section wrapper ────────────────────────────── */
+        .section {
+            max-width: 620px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-family: Impact, 'Arial Black', sans-serif;
+            font-size: clamp(1.5rem, 6vw, 2.2rem);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-align: center;
+            margin-bottom: 22px;
+            background: linear-gradient(90deg, var(--pink), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 10px rgba(255,0,153,.5));
+        }
+
+        /* ── Neon divider ───────────────────────────────── */
+        .neon-divider {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--pink), var(--cyan), var(--lime), var(--pink), transparent);
+            margin: 8px 0 32px;
+            box-shadow: 0 0 10px var(--pink);
+        }
+
+        /* ── Cards ──────────────────────────────────────── */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+        .card {
+            background: rgba(255,255,255,.05);
+            backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(255,255,255,.15);
+            border-radius: 16px;
+            padding: 20px 14px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(204,0,255,.15);
+            transition: transform .15s, box-shadow .15s;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 30px rgba(0,255,255,.3);
+            border-color: rgba(0,255,255,.4);
+        }
+        .card-icon { font-size: 2.4rem; display: block; margin-bottom: 8px; }
+        .card-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1rem;
+            color: var(--cyan);
+        }
+        .card-desc { font-size: .82rem; margin-top: 5px; color: rgba(255,255,255,.65); }
+        .card.full  { grid-column: span 2; background: rgba(255,0,153,.12); border-color: rgba(255,0,153,.4); }
+        .card.full .card-title { color: var(--pink); font-size: 1.2rem; }
+
+        /* ── Bring list ─────────────────────────────────── */
+        .bring-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .bring-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(255,255,255,.05);
+            backdrop-filter: blur(8px);
+            border: 1.5px solid rgba(255,255,255,.12);
+            border-radius: 14px;
+            padding: 13px 16px;
+            transition: border-color .15s, box-shadow .15s;
+        }
+        .bring-item:hover {
+            border-color: rgba(0,255,255,.4);
+            box-shadow: 0 0 15px rgba(0,255,255,.15);
+        }
+        .bring-item .bi-icon { font-size: 1.8rem; flex-shrink: 0; }
+        .bring-item strong { display: block; font-family: 'Fredoka One', cursive; font-size: 1rem; color: #fff; }
+        .bring-item small { font-size: .82rem; color: rgba(255,255,255,.55); }
+        .bring-item.vip { border-color: rgba(255,255,0,.4); box-shadow: 0 0 15px rgba(255,255,0,.1); }
+        .bring-item.vip strong { color: var(--yellow); }
+
+        /* ── Map button ─────────────────────────────────── */
+        .map-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 22px;
+            background: linear-gradient(135deg, rgba(255,0,153,.2), rgba(204,0,255,.2));
+            border: 2px solid var(--pink);
+            border-radius: 18px;
+            text-decoration: none;
+            color: #fff;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.3rem;
+            gap: 4px;
+            box-shadow: 0 0 30px rgba(255,0,153,.3), inset 0 0 20px rgba(255,0,153,.05);
+            transition: transform .15s, box-shadow .15s;
+        }
+        .map-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 50px rgba(255,0,153,.5), inset 0 0 20px rgba(255,0,153,.1);
+        }
+        .map-btn small { font-size: .85rem; opacity: .7; font-family: Verdana, sans-serif; }
+
+        /* ── RSVP form ──────────────────────────────────── */
+        .rsvp-form { display: flex; flex-direction: column; gap: 12px; }
+
+        .form-input {
+            font-family: Verdana, sans-serif;
+            font-size: .95rem;
+            padding: 13px 16px;
+            background: rgba(255,255,255,.07);
+            border: 1.5px solid rgba(0,255,255,.3);
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            width: 100%;
+            transition: border-color .15s, box-shadow .15s;
+        }
+        .form-input::placeholder { color: rgba(255,255,255,.35); }
+        .form-input:focus {
+            border-color: var(--cyan);
+            box-shadow: 0 0 15px rgba(0,255,255,.3);
+        }
+        textarea.form-input { resize: none; }
+
+        .submit-btn {
+            font-family: Impact, sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(255,0,153,.4), 0 4px 0 rgba(100,0,80,.8);
+            transition: transform .15s, box-shadow .15s;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(255,0,153,.6), 0 6px 0 rgba(100,0,80,.8);
+        }
+
+        .success-msg {
+            display: none;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(57,255,20,.15), rgba(0,255,255,.1));
+            border: 2px solid var(--lime);
+            border-radius: 14px;
+            text-align: center;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.3rem;
+            color: var(--lime);
+            box-shadow: 0 0 25px rgba(57,255,20,.3);
+            animation: pop .35s ease;
+        }
+        @keyframes pop { from { transform: scale(.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* ── Guest list ─────────────────────────────────── */
+        .guest-list { margin-top: 28px; }
+        .guest-list-title {
+            font-family: Impact, sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 12px;
+            text-shadow: 0 0 10px var(--cyan);
+        }
+        .guest-count-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--pink), var(--purple));
+            color: white;
+            font-family: 'Fredoka One', cursive;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: .9rem;
+            margin-bottom: 12px;
+            box-shadow: 0 0 12px rgba(255,0,153,.4);
+        }
+        .guest-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            background: rgba(255,255,255,.05);
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 12px;
+            padding: 10px 14px;
+            margin-bottom: 8px;
+        }
+        .guest-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+            font-size: .95rem;
+            flex-shrink: 0;
+            font-family: Impact, sans-serif;
+        }
+        .guest-name  { font-family: 'Fredoka One', cursive; font-size: 1rem; color: #fff; }
+        .guest-comment { font-size: .82rem; color: rgba(255,255,255,.5); margin-top: 2px; }
+
+        /* ── Calendar buttons ───────────────────────────── */
+        .cal-section {
+            margin-top: 28px;
+            padding-top: 22px;
+            border-top: 1px solid rgba(255,255,255,.1);
+        }
+        .cal-title {
+            font-family: Impact, sans-serif;
+            letter-spacing: 3px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            text-align: center;
+            color: var(--cyan);
+            margin-bottom: 12px;
+        }
+        .cal-btns { display: flex; gap: 11px; }
+        .cal-btn {
+            flex: 1;
+            padding: 13px;
+            border-radius: 12px;
+            border: 1.5px solid rgba(255,255,255,.2);
+            font-family: 'Fredoka One', cursive;
+            font-size: 1rem;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            transition: transform .15s, box-shadow .15s;
+        }
+        .cal-btn:hover { transform: translateY(-3px); }
+        .cal-btn.google {
+            background: rgba(66,133,244,.25);
+            color: #fff;
+            border-color: rgba(66,133,244,.5);
+            box-shadow: 0 0 15px rgba(66,133,244,.2);
+        }
+        .cal-btn.google:hover { box-shadow: 0 0 25px rgba(66,133,244,.4); }
+        .cal-btn.apple {
+            background: rgba(255,255,255,.08);
+            color: #fff;
+            border-color: rgba(255,255,255,.3);
+        }
+        .cal-btn.apple:hover { box-shadow: 0 0 25px rgba(255,255,255,.15); }
+
+        /* ── Y2K fun pictures row ───────────────────────── */
+        .y2k-pics {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 20px 0;
+        }
+        .y2k-pic {
+            background: rgba(255,255,255,.06);
+            border: 2px solid rgba(255,255,255,.15);
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 3rem;
+            text-align: center;
+            min-width: 80px;
+            box-shadow: 0 0 15px rgba(204,0,255,.2);
+            animation: floaty var(--fd,3s) ease-in-out infinite var(--fdelay,0s);
+            transition: box-shadow .2s;
+        }
+        .y2k-pic:hover { box-shadow: 0 0 30px rgba(0,255,255,.4); }
+        .y2k-pic p { font-size: .65rem; margin-top: 5px; font-family: 'VT323', monospace; color: rgba(255,255,255,.6); letter-spacing: 1px; }
+
+        /* ── Blink ──────────────────────────────────────── */
+        .blink { animation: blink 1s step-end infinite; }
+        @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+
+        /* ── Footer ─────────────────────────────────────── */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid rgba(255,255,255,.07);
+        }
+        .footer p {
+            font-family: 'VT323', monospace;
+            font-size: 1rem;
+            color: rgba(255,255,255,.4);
+            line-height: 1.8;
+            letter-spacing: 1px;
+        }
+        .footer .hits {
+            display: inline-block;
+            background: #000;
+            border: 2px solid var(--lime);
+            color: var(--lime);
+            font-family: 'VT323', monospace;
+            font-size: 1.1rem;
+            padding: 4px 14px;
+            border-radius: 6px;
+            box-shadow: 0 0 8px var(--lime);
+            letter-spacing: 3px;
+            margin-top: 6px;
+        }
+
+        /* ── Collage hero ───────────────────────────────── */
+        .collage-area {
+            position: relative;
+            width: min(340px, 92vw);
+            height: min(310px, 88vw);
+            margin: 10px auto 4px;
+        }
+        .collage-img {
+            position: absolute;
+            mix-blend-mode: screen;
+        }
+        .boy-img {
+            width: 68%;
+            right: 2%;
+            top: 0;
+            transform: rotate(2deg);
+            filter: drop-shadow(0 4px 20px rgba(0,0,0,.5));
+        }
+        .duck-img {
+            width: 38%;
+            left: 0;
+            bottom: 4%;
+            transform: rotate(-6deg);
+            animation: floaty 4s ease-in-out infinite;
+            filter: drop-shadow(0 4px 12px rgba(255,85,0,.15));
+        }
+
+        /* Ransom note title */
+        .title-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            margin-bottom: 20px;
+        }
+        .ransom-word {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+        }
+        .rl {
+            font-family: 'Fredoka One', cursive;
+            padding: 3px 11px;
+            border-radius: 6px;
+            line-height: 1;
+            display: inline-block;
+        }
+        /* varied sizes for chaos */
+        .rl-xl { font-size: clamp(4rem, 16vw, 7rem); }
+        .rl-lg { font-size: clamp(3rem, 12vw, 5.5rem); }
+        .rl-md { font-size: clamp(2.2rem, 9vw, 4rem); }
+
+        .ransom-sub {
+            font-family: Impact, 'Arial Black', sans-serif;
+            font-size: clamp(1.4rem, 6vw, 2.4rem);
+            color: var(--lime);
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(57,255,20,.7), 0 0 40px rgba(57,255,20,.3);
+        }
+        .ransom-tag {
+            font-family: Verdana, sans-serif;
+            font-size: clamp(.75rem, 3vw, .95rem);
+            color: rgba(255,255,255,.4);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 2px;
+            margin-bottom: 16px;
+        }
+
+        /* ── Responsive ─────────────────────────────────── */
+        @media (max-width: 420px) {
+            .cards-grid { grid-template-columns: 1fr; }
+            .card.full  { grid-column: span 1; }
+            .cal-btns   { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="sparkle-canvas"></canvas>
+
+<!-- Starfield -->
+<div class="stars" id="stars"></div>
+
+<!-- Marquee -->
+<div class="marquee-wrap">
+    <span class="marquee-text">
+        ✨ PARTY EN EL PARQUE ✨ ABRIL 15 · MIÉRCOLES ✨ 3 A 6:30 PM 🌭 PARQUE PRESAS TLALIXTAC 🔥 HOTDOGS GRATIS 🤌 GOOD VIBES ONLY 🎶 TRAE BOTANA Y ALGO DE TOMAR ✨ CONFIRMA TU ASISTENCIA 🌳 PICNIC CHILL ✨
+    </span>
+</div>
+
+<div class="page">
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero">
+    <!-- Floating stickers -->
+    <span class="y2k-sticker" style="top:4%;  left:4%;  --fd:3.5s; --fdelay:0s;   --fr:-8deg">🌳</span>
+    <span class="y2k-sticker" style="top:5%;  right:5%; --fd:4s;   --fdelay:.5s;  --fr:6deg">☀️</span>
+    <span class="y2k-sticker" style="top:35%; left:2%;  --fd:3.2s; --fdelay:1s;   --fr:-5deg; font-size:1.8rem">🌭</span>
+    <span class="y2k-sticker" style="top:37%; right:2%; --fd:5s;   --fdelay:.4s;  --fr:10deg; font-size:1.8rem">🎈</span>
+    <span class="y2k-sticker" style="bottom:32%;left:3%; --fd:4.2s; --fdelay:.7s;  --fr:4deg;  font-size:1.7rem">🎶</span>
+    <span class="y2k-sticker" style="bottom:30%;right:4%;--fd:3.8s; --fdelay:1.2s; --fr:-6deg; font-size:1.7rem">🌿</span>
+    <span class="y2k-sticker" style="bottom:8%; left:5%; --fd:4.5s; --fdelay:.3s;  --fr:-10deg;font-size:1.6rem">🛸</span>
+    <span class="y2k-sticker" style="bottom:6%; right:5%;--fd:3.6s; --fdelay:.9s;  --fr:8deg;  font-size:1.6rem">🎊</span>
+
+    <!-- Collage: boy + duck floating -->
+    <div class="collage-area">
+        <img src="me.jpg"  class="collage-img boy-img"  alt="">
+        <img src="me2.jpg" class="collage-img duck-img" alt="">
+    </div>
+
+    <div class="title-block">
+        <div class="ransom-word">
+            <span class="rl rl-xl" style="background:#f0c040; color:#1a1a1a; transform:rotate(-5deg)">p</span>
+            <span class="rl rl-md" style="color:#ff5500; transform:rotate(3deg) translateY(-6px)">a</span>
+            <span class="rl rl-lg" style="background:#2980b9; color:white; transform:rotate(-3deg)">r</span>
+            <span class="rl rl-xl" style="background:#e74c3c; color:white; transform:rotate(4deg) translateY(-4px)">T</span>
+            <span class="rl rl-lg" style="color:var(--lime); text-shadow:0 0 20px rgba(57,255,20,.8); transform:rotate(-4deg)">y</span>
+        </div>
+        <div class="ransom-sub">EN EL PARQUE</div>
+    </div>
+
+    <div class="date-chip" style="flex-direction:column; gap:4px; padding:14px 28px;">
+        <div style="font-family:'Fredoka One',cursive; font-size:.95rem; color:var(--cyan); letter-spacing:3px; text-transform:uppercase;">Miércoles 15 de Abril</div>
+        <div class="date-number" style="font-size:1.8rem; line-height:1.2;">3:00 – 6:30 PM</div>
+    </div>
+
+    <div class="location-tag">📍 PARQUE PRESAS TLALIXTAC</div>
+
+    <a href="https://maps.app.goo.gl/Cd4xYxtwnmc8qNXp8?g_st=ic" target="_blank" class="hero-cta">
+        🗺 VER EN GOOGLE MAPS
+    </a>
+</section>
+
+<!-- Y2K pics row -->
+<div class="section" style="padding-top:0; padding-bottom:0;">
+    <div class="y2k-pics">
+        <div class="y2k-pic" style="--fd:3s;--fdelay:0s"><span>🌭</span><p>HOTDOGS</p></div>
+        <div class="y2k-pic" style="--fd:3.5s;--fdelay:.4s"><span>😎</span><p>VIBES</p></div>
+        <div class="y2k-pic" style="--fd:4s;--fdelay:.8s"><span>🍿</span><p>SNACKS</p></div>
+        <div class="y2k-pic" style="--fd:3.2s;--fdelay:1.2s"><span>🥤</span><p>DRINKS</p></div>
+        <div class="y2k-pic" style="--fd:4.5s;--fdelay:.2s"><span>🔥</span><p>FUEGO</p></div>
+        <div class="y2k-pic" style="--fd:3.8s;--fdelay:.6s"><span>🎶</span><p>MÚSICA</p></div>
+    </div>
+</div>
+
+<div class="neon-divider" style="max-width:620px;margin:0 auto 0;"></div>
+
+<!-- ══════════════ EL PLAN ══════════════ -->
+<section class="section">
+    <h2 class="section-title">El plan</h2>
+
+    <!-- Drake meme -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0; border:2px solid rgba(255,255,255,.15); border-radius:16px; overflow:hidden; margin-bottom:14px;">
+        <div style="background:rgba(255,85,0,.15); border-right:2px solid rgba(255,255,255,.1); padding:16px 14px; display:flex; align-items:center; gap:10px;">
+            <span style="font-size:2rem; flex-shrink:0">🙅</span>
+            <span style="font-family:'Fredoka One',cursive; font-size:.9rem; color:rgba(255,255,255,.6)">quedarte en casa el miércoles</span>
+        </div>
+        <div style="background:rgba(57,255,20,.1); padding:16px 14px; display:flex; align-items:center; gap:10px;">
+            <span style="font-size:2rem; flex-shrink:0">👉</span>
+            <span style="font-family:'Fredoka One',cursive; font-size:.9rem; color:#39ff14">party en el parque con hotdogs 🌭</span>
+        </div>
+    </div>
+
+    <div class="cards-grid">
+        <div class="card">
+            <span class="card-icon">🌭</span>
+            <div class="card-title">Hotdogs</div>
+        </div>
+        <div class="card">
+            <span class="card-icon">🌳</span>
+            <div class="card-title">Parque + sol</div>
+        </div>
+        <div class="card">
+            <span class="card-icon">🎶</span>
+            <div class="card-title">Música</div>
+        </div>
+        <div class="card">
+            <span class="card-icon">🧺</span>
+            <div class="card-title">Picnic chill</div>
+        </div>
+    </div>
+</section>
+
+<div class="neon-divider" style="max-width:620px;margin:0 auto;"></div>
+
+<!-- ══════════════ QUÉ TRAER ══════════════ -->
+<section class="section">
+    <h2 class="section-title">Trae 🎒</h2>
+    <ul class="bring-list">
+        <li class="bring-item">
+            <span class="bi-icon">🍿</span>
+            <div>
+                <strong>Un snack para compartir</strong>
+                <small style="display:block; color:rgba(255,255,255,.45); font-size:.8rem">si se te antoja, no es necesario</small>
+            </div>
+        </li>
+        <li class="bring-item">
+            <span class="bi-icon">🥤</span>
+            <div>
+                <strong>Algo de tomar</strong>
+                <small style="display:block; color:rgba(255,255,255,.45); font-size:.8rem">lo que quieras, para ti o para compartir — tampoco es necesario</small>
+            </div>
+        </li>
+        <li class="bring-item vip">
+            <span class="bi-icon">🗿</span>
+            <div>
+                <strong>Good vibes</strong>
+                <small style="display:block; color:rgba(255,255,255,.45); font-size:.8rem">esto sí es necesario</small>
+            </div>
+        </li>
+    </ul>
+</section>
+
+<div class="neon-divider" style="max-width:620px;margin:0 auto;"></div>
+
+<!-- ══════════════ UBICACIÓN ══════════════ -->
+<section class="section">
+    <h2 class="section-title">Dónde 🗺️</h2>
+    <a href="https://maps.app.goo.gl/Cd4xYxtwnmc8qNXp8?g_st=ic" target="_blank" class="map-btn">
+        🗺 Parque Presas Tlalixtac
+        <small>Tlalixtac de Cabrera, Oaxaca</small>
+    </a>
+</section>
+
+<div class="neon-divider" style="max-width:620px;margin:0 auto;"></div>
+
+<!-- ══════════════ RSVP ══════════════ -->
+<section class="section">
+    <h2 class="section-title">¿Vas? 🙋</h2>
+    <p style="text-align:center; color:rgba(255,255,255,.6); font-size:.95rem; margin-bottom:20px; margin-top:-10px;">Por favor si vienes confirma aquí dejando tu nombre y un comentario, es necesario para saber quién viene.</p>
+
+    <div id="success-msg" class="success-msg">
+        ✅ ¡Ya estás! Nos vemos el 15 🎉
+    </div>
+
+    <form class="rsvp-form" id="rsvp-form">
+        <input type="text" class="form-input" id="guest-name"
+               placeholder="Tu nombre" required maxlength="40" autocomplete="name">
+        <textarea class="form-input" id="guest-comment"
+                  placeholder="Deja un mensaje 👋"
+                  rows="3" maxlength="150"></textarea>
+        <button type="submit" class="submit-btn">✅ AHÍ ESTARÉ</button>
+    </form>
+
+    <!-- Guest list -->
+    <div class="guest-list" id="guest-list">
+        <div class="guest-list-title">🎈 Quiénes van</div>
+        <div id="guests-container"></div>
+    </div>
+
+    <!-- Calendar -->
+    <div class="cal-section">
+        <div class="cal-title">📅 Guárdalo en tu calendario</div>
+        <div class="cal-btns">
+            <a id="google-cal-btn" href="#" target="_blank" class="cal-btn google">📅 Google Calendar</a>
+            <a id="apple-cal-btn" href="#" class="cal-btn apple">🍎 Apple / iCal</a>
+        </div>
+    </div>
+</section>
+
+<div class="neon-divider" style="max-width:620px;margin:0 auto;"></div>
+
+<!-- ══════════════ PLAYLIST ══════════════ -->
+<section class="section">
+    <h2 class="section-title">La playlist 🎶</h2>
+    <p style="text-align:center; color:rgba(255,255,255,.5); font-size:.9rem; margin-bottom:16px; margin-top:-10px;">Agrega las canciones que quieras escuchar en la party</p>
+    <div style="border-radius:14px; overflow:hidden; box-shadow:0 0 30px rgba(57,255,20,.15);">
+        <iframe src="https://open.spotify.com/embed/playlist/0t8aabmSwCIOxlZmsFmO4J?utm_source=generator&theme=0"
+            width="100%" height="380" frameBorder="0"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"></iframe>
+    </div>
+    <a href="https://open.spotify.com/playlist/0t8aabmSwCIOxlZmsFmO4J" target="_blank"
+       class="hero-cta" style="display:block; text-align:center; margin-top:14px;">
+        + Agregar canciones en Spotify
+    </a>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer class="footer">
+    <p>
+        PARTY EN EL PARQUE · ABRIL 15 · 3–6:30 PM<br>
+        <span class="blink">★</span> GOOD VIBES ONLY <span class="blink">★</span><br><br>
+        <span style="font-size:.75rem">BEST VIEWED IN 800×600 · NETSCAPE NAVIGATOR 4.0 😂</span>
+    </p>
+    <div class="hits" id="hit-counter">VISITORS: 0001</div>
+</footer>
+
+</div><!-- /page -->
+
+<script>
+/* ── Starfield ─────────────────────────────────── */
+(function() {
+    const container = document.getElementById('stars');
+    const count = 120;
+    for (let i = 0; i < count; i++) {
+        const s = document.createElement('div');
+        s.className = 'star';
+        const size = Math.random() * 2.5 + .5;
+        s.style.cssText = [
+            'left:'    + Math.random() * 100 + '%',
+            'top:'     + Math.random() * 100 + '%',
+            'width:'   + size + 'px',
+            'height:'  + size + 'px',
+            '--d:'     + (Math.random() * 4 + 2) + 's',
+            '--delay:' + (Math.random() * 5) + 's',
+            'opacity:' + (Math.random() * .7 + .2)
+        ].join(';');
+        container.appendChild(s);
+    }
+})();
+
+/* ── Cursor sparkle trail ──────────────────────── */
+(function() {
+    const canvas = document.getElementById('sparkle-canvas');
+    const ctx    = canvas.getContext('2d');
+    const particles = [];
+    const colors = ['#ff5500','#00ffff','#39ff14','#ffff00','#00aaff','#fff'];
+
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function Particle(x, y) {
+        this.x = x; this.y = y;
+        this.vx = (Math.random() - .5) * 3;
+        this.vy = (Math.random() - .5) * 3 - 1;
+        this.life = 1;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.size = Math.random() * 5 + 2;
+    }
+
+    window.addEventListener('mousemove', function(e) {
+        for (let i = 0; i < 4; i++) particles.push(new Particle(e.clientX, e.clientY));
+    });
+
+    function loop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.x += p.vx; p.y += p.vy; p.life -= .03;
+            if (p.life <= 0) { particles.splice(i, 1); continue; }
+            ctx.save();
+            ctx.globalAlpha = p.life;
+            ctx.fillStyle = p.color;
+            ctx.shadowBlur = 6;
+            ctx.shadowColor = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+        requestAnimationFrame(loop);
+    }
+    loop();
+})();
+
+/* ── Calendar ──────────────────────────────────── */
+const gcUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+    + '&text=' + encodeURIComponent('Fiesta de Alfredo 🎉')
+    + '&dates=20260415T150000/20260415T183000'
+    + '&details=' + encodeURIComponent('Hotdogs + picnic chill + buena música 🌭🎶\nTrae tu snack favorito, algo de tomar y muchas good vibes.\nSin bad vibes permitido 😎')
+    + '&location=' + encodeURIComponent('Parque Presas, Tlalixtac de Cabrera, Oaxaca');
+document.getElementById('google-cal-btn').href = gcUrl;
+
+document.getElementById('apple-cal-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    const ics = [
+        'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Party en el Parque//ES',
+        'BEGIN:VEVENT',
+        'DTSTART;TZID=America/Mexico_City:20260415T150000',
+        'DTEND;TZID=America/Mexico_City:20260415T183000',
+        'SUMMARY:Fiesta de Alfredo \uD83C\uDF89',
+        'DESCRIPTION:Hotdogs + picnic chill. Trae snacks\\, bebida y good vibes.',
+        'LOCATION:Parque Presas\\, Tlalixtac de Cabrera\\, Oaxaca',
+        'URL:https://maps.app.goo.gl/Cd4xYxtwnmc8qNXp8',
+        'STATUS:CONFIRMED',
+        'END:VEVENT','END:VCALENDAR'
+    ].join('\r\n');
+    const blob = new Blob([ics], { type:'text/calendar;charset=utf-8' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url; a.download = 'party-en-el-parque.ics'; a.click();
+    URL.revokeObjectURL(url);
+});
+
+/* ── Fake hit counter ──────────────────────────── */
+(function() {
+    const base = parseInt(localStorage.getItem('hitBase') || '0');
+    const visits = parseInt(localStorage.getItem('hitVisits') || '0') + 1;
+    if (!localStorage.getItem('hitBase')) localStorage.setItem('hitBase', Math.floor(Math.random() * 200 + 50));
+    localStorage.setItem('hitVisits', visits);
+    const total = parseInt(localStorage.getItem('hitBase')) + visits;
+    document.getElementById('hit-counter').textContent = 'VISITORS: ' + String(total).padStart(4,'0');
+})();
+
+/* ── RSVP (kvdb shared + formspree email) ──────── */
+const BUCKET = 'F6TWZFvXuWnFH3sELegW99';
+const KV_URL = 'https://kvdb.io/' + BUCKET + '/rsvps';
+const avatarColors = ['#ff5500','#00ccff','#39ff14','#00aaff','#ff6600','#ffff00'];
+
+function escapeHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderGuests(guests) {
+    const container = document.getElementById('guests-container');
+    if (!guests.length) {
+        container.innerHTML = '<p style="color:rgba(255,255,255,.35);font-size:.9rem;text-align:center;padding:14px">¡Sé el primero en confirmar! 👆</p>';
+        return;
+    }
+    container.innerHTML =
+        '<div class="guest-count-badge">' + guests.length + (guests.length === 1 ? ' persona va' : ' personas van') + '</div>'
+        + guests.map(function(g, i) {
+            const color = avatarColors[i % avatarColors.length];
+            return '<div class="guest-item">'
+                + '<div class="guest-avatar" style="background:' + color + ';color:' + (color === '#ffff00' ? '#000' : '#fff') + '">'
+                + g.name.charAt(0).toUpperCase()
+                + '</div>'
+                + '<div>'
+                + '<div class="guest-name">' + escapeHtml(g.name) + '</div>'
+                + (g.comment ? '<div class="guest-comment">' + escapeHtml(g.comment) + '</div>' : '')
+                + '</div></div>';
+        }).join('');
+}
+
+async function loadGuests() {
+    try {
+        const res = await fetch(KV_URL + '?t=' + Date.now(), { cache: 'no-store' });
+        if (res.ok) {
+            const text = await res.text();
+            const guests = text ? JSON.parse(text) : [];
+            renderGuests(guests);
+        }
+    } catch(e) {
+        // silently fail — no list shown if offline
+    }
+}
+
+document.getElementById('rsvp-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const name    = document.getElementById('guest-name').value.trim();
+    const comment = document.getElementById('guest-comment').value.trim();
+    if (!name) return;
+
+    const btn = this.querySelector('.submit-btn');
+    btn.textContent = 'Enviando...';
+    btn.disabled = true;
+
+    try {
+        // 1 — fetch current list
+        const getRes = await fetch(KV_URL);
+        const text   = getRes.ok ? await getRes.text() : '[]';
+        const guests = text ? JSON.parse(text) : [];
+
+        // 2 — add new guest
+        guests.unshift({ name, comment });
+
+        // 3 — save back to kvdb
+        await fetch(KV_URL, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(guests)
+        });
+
+        // 4 — notify via formspree
+        fetch('https://formspree.io/alfreduoh@gmail.com', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ name, comment, _subject: '🎉 ' + name + ' va a la party!' })
+        });
+
+        // 5 — update UI
+        document.getElementById('success-msg').style.display = 'block';
+        this.style.display = 'none';
+        renderGuests(guests);
+
+    } catch(err) {
+        btn.textContent = '✅ AHÍ ESTARÉ';
+        btn.disabled = false;
+        alert('Sin conexión, intenta de nuevo.');
+    }
+});
+
+loadGuests();
+</script>
+</body>
+</html>
